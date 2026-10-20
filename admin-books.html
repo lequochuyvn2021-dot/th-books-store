@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Quản Lý Sách - Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <aside class="lg:col-span-1 bg-slate-900 text-slate-300 rounded-3xl p-4 shadow-xl space-y-1 h-fit text-xs font-bold">
+            <div class="px-3 py-2 border-b border-slate-800 mb-2 text-amber-400 uppercase">Hệ Thống Quản Trị</div>
+            <a href="admin-employees.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">👤 Quản lý nhân viên</a>
+            <a href="admin-books.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#006838] text-white">📚 Quản lý sách</a>
+            <a href="admin-authors.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">✍️ Quản lý tác giả</a>
+            <a href="admin-publishers.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">🏢 Quản lý NXB/NCC</a>
+            <a href="admin-inventory.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">📦 Nhập – xuất kho</a>
+            <a href="admin-orders.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">🛒 Quản lý đơn hàng</a>
+            <a href="admin-customers.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">👥 Quản lý khách hàng</a>
+            <a href="admin-revenue.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">💰 Quản lý doanh thu</a>
+            <a href="admin-reports.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">📊 Thống kê, báo cáo</a>
+            <a href="admin-permissions.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">🔐 Đăng nhập & phân quyền</a>
+            <a href="index.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-red-400 hover:bg-slate-800 mt-4"><i class="fa-solid fa-arrow-left"></i> Về trang Cửa hàng</a>
+        </aside>
+
+        <main class="lg:col-span-4 bg-white rounded-3xl p-6 border shadow-sm space-y-4">
+            <div class="flex justify-between items-center border-b pb-3">
+                <h2 class="text-xl font-black text-slate-900"><i class="fa-solid fa-book text-emerald-600 mr-2"></i>Quản Lý Kho Sách</h2>
+                <a href="index.html" class="bg-[#006838] text-white px-3.5 py-2 rounded-xl text-xs font-bold"><i class="fa-solid fa-plus mr-1"></i>Thêm Sách Mới</a>
+            </div>
+            <table class="w-full text-left text-xs">
+                <thead class="bg-slate-100 uppercase font-black"><tr><th class="p-3">Mã Sách</th><th class="p-3">Tên Tựa Sách</th><th class="p-3">Tác Giả</th><th class="p-3">Giá Bán</th><th class="p-3">Tồn Kho</th></tr></thead>
+                <tbody id="tblBooks" class="divide-y"></tbody>
+            </table>
+        </main>
+    </div>
+</body>
+</html>

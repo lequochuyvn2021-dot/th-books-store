@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Thống Kê Báo Cáo - Admin Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/app.js"></script>
+</head>
+<body class="bg-slate-50 text-slate-800">
+    <div class="max-w-7xl mx-auto p-6 grid grid-cols-1 lg:grid-cols-5 gap-6">
+        <aside class="lg:col-span-1 bg-slate-900 text-slate-300 rounded-3xl p-4 shadow-xl space-y-1 h-fit text-xs font-bold">
+            <div class="px-3 py-2 border-b border-slate-800 mb-2 text-amber-400 uppercase">Hệ Thống Quản Trị</div>
+            <a href="admin-employees.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">👤 Quản lý nhân viên</a>
+            <a href="admin-books.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">📚 Quản lý sách</a>
+            <a href="admin-authors.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">✍️ Quản lý tác giả</a>
+            <a href="admin-publishers.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">🏢 Quản lý NXB/NCC</a>
+            <a href="admin-inventory.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">📦 Nhập – xuất kho</a>
+            <a href="admin-orders.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">🛒 Quản lý đơn hàng</a>
+            <a href="admin-customers.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">👥 Quản lý khách hàng</a>
+            <a href="admin-revenue.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">💰 Quản lý doanh thu</a>
+            <a href="admin-reports.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl bg-[#006838] text-white">📊 Thống kê, báo cáo</a>
+            <a href="admin-permissions.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl hover:bg-slate-800">🔐 Đăng nhập & phân quyền</a>
+            <a href="index.html" class="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-red-400 hover:bg-slate-800 mt-4"><i class="fa-solid fa-arrow-left"></i> Về trang Cửa hàng</a>
+        </aside>
+
+        <main class="lg:col-span-4 bg-white rounded-3xl p-6 border shadow-sm space-y-4">
+            <h2 class="text-xl font-black text-slate-900 border-b pb-3"><i class="fa-solid fa-chart-column text-indigo-500 mr-2"></i>Thống Kê Hoạt Động & Báo Cáo Sách Bán Chạy</h2>
+            <div class="p-8 bg-slate-50 rounded-2xl text-center text-xs text-slate-600 space-y-2">
+                <i class="fa-solid fa-chart-line text-4xl text-[#006838] mb-2"></i>
+                <p class="font-bold text-sm text-slate-800">Top tựa sách có lượt mua cao nhất tuần qua:</p>
+                <p class="text-THBook font-black text-base">1. Đại Dương Ký Ức (Đã bán: 45 cuốn)</p>
+                <p class="text-THBook font-black text-base">2. Phía Sau Nghi Can X (Đã bán: 32 cuốn)</p>
+            </div>
+        </main>
+    </div>
+</body>
+</html>

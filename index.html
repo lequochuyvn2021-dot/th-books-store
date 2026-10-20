@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The TH Book - Hệ Thống Quản Lý & Bán Sách</title>
+<link rel="stylesheet" href="style/style.css">
+<script src="js/app.js" defer></script>
+<!-- BỔ SUNG CSS CHO CÁC KHUNG QUY ĐỊNH NGHIỆP VỤ -->
+<style>
+.rule-box { background: #fef3c7; border-left: 4px solid #f59e0b; padding: 10px 14px; border-radius: 6px; font-size: 13px; margin-bottom: 14px; color: #92400e; }
+body.dark .rule-box { background: #3b2d12; color: #fde047; }
+</style>
+</head>
+<body>
+
+<!-- Thanh admin (chỉ hiện khi đăng nhập admin) -->
+<div id="adminBar" class="adminbar hidden">
+  <span>🛡 Đang đăng nhập với quyền Quản Trị Viên</span>
+  <span>
+    <button id="btnStore" onclick="switchView('store')">Cửa Hàng</button>
+    <button id="btnAdmin" onclick="switchView('admin')">Trang Quản Lý</button>
+  </span>
+</div>
+
+<!-- Header -->
+<header id="storeHeader" class="header">
+  <div class="wrap head-row">
+    <a class="logo" href="#" onclick="switchView('store');return false">📚 <b>The TH BOOKS</b><small>Khai mở tri thức</small></a>
+    
+    <!-- Tra cứu sách (BM3) -->
+    <input id="searchInput" class="search" placeholder="Tra cứu sách: tên, tác giả, thể loại..." onkeyup="handleSearch()">
+    
+    <!-- NÚT CHUYỂN ĐỔI GIAO DIỆN SÁNG / TỐI (DARK MODE TOGGLE) -->
+    <button id="themeToggleBtn" class="theme-toggle-btn" onclick="toggleTheme()" title="Chuyển đổi giao diện Sáng / Tối">
+      <span id="themeIcon">🌙</span>
+      <span id="themeText">Tối</span>
+    </button>
+
+    <div id="accountArea"></div>
+    <button class="icon-btn" onclick="openCart()">🛍️<span id="cartCounter" class="badge">0</span><span>Giỏ hàng</span></button>
+  </div>
+  <nav class="nav"><div id="catNav" class="wrap"></div></nav>
+</header>
+
+<!-- Trang cửa hàng -->
+<main id="storeView" class="wrap">
+  <section class="hero">
+    <div>
+      <span class="pill">Bộ sưu tập mới 2026</span>
+      <h1>Mở Sách Là Mở Thế Giới</h1>
+      <p>Khám phá hàng chục tựa sách chọn lọc. Tra cứu danh mục sách, đặt mua dễ dàng, giao hàng tận nơi.</p>
+      <a class="btn-gold" href="#catalog">Khám Phá Tủ Sách</a>
+      <button class="btn-line" onclick="setSort('bestseller')">Sách Bán Chạy</button>
+    </div>
+    <div class="hero-books">
+      <div class="hb" style="position: relative; overflow: hidden; border-radius: 12px; width: 150px; height: 220px;">
+          <img src="images/dac-nhan-tam.jpg" alt="Đắc Nhân Tâm" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+      <div class="hb big" style="position: relative; overflow: hidden; border-radius: 12px;">
+          <img src="images/nha-gia-kim.jpg" alt="Nhà Giả Kim" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+      <div class="hb" style="position: relative; overflow: hidden; border-radius: 12px;">
+          <img src="images/sapiens.jpg" alt="Sapiens" style="width: 100%; height: 100%; object-fit: cover; display: block;">
+      </div>
+    </div>
+  </section>
+
+  <section class="features">
+    <div>🚚 <b>Giao hàng toàn quốc</b><small>Miễn phí từ 250.000 đ</small></div>
+    <div>↩️ <b>Đổi trả 7 ngày</b><small>Nếu sách lỗi in ấn</small></div>
+    <div>🛡️ <b>Sách chính hãng</b><small>Nhập từ NXB uy tín</small></div>
+    <div>🎧 <b>Hỗ trợ 1900 1099</b><small>8:00 - 21:00 hằng ngày</small></div>
+  </section>
+
+  <section id="catalog" class="panel">
+    <div class="toolbar">
+      <h2>Danh Mục Sách Nổi Bật & Tra Cứu </h2>
+      <span id="resultInfo" class="mu"></span>
+      <select id="sortSelect" onchange="handleSort()">
+        <option value="default">Sắp xếp mặc định</option>
+        <option value="bestseller">Bán chạy nhất</option>
+        <option value="discount">Giảm giá nhiều nhất</option>
+        <option value="price-asc">Giá thấp đến cao</option>
+        <option value="price-desc">Giá cao đến thấp</option>
+      </select>
+    </div>
+
+    <!-- BỔ SUNG: BỘ LỌC NÂNG CAO (KHOẢNG GIÁ & KHUYẾN MÃI) -->
+    <div style="display: flex; gap: 10px; margin-bottom: 16px; flex-wrap: wrap;">
+      <select id="priceFilter" onchange="handleAdvancedFilter()" style="max-width: 220px;">
+        <option value="all">Tất cả khoảng giá</option>
+        <option value="under100">Dưới 100.000 đ</option>
+        <option value="100to200">100.000 đ - 200.000 đ</option>
+        <option value="over200">Trên 200.000 đ</option>
+      </select>
+      <select id="discountFilter" onchange="handleAdvancedFilter()" style="max-width: 200px;">
+        <option value="all">Tất cả khuyến mãi</option>
+        <option value="discounted">Đang giảm giá</option>
+      </select>
+    </div>
+
+    <div id="productGrid" class="grid"></div>
+    <div class="center"><button id="btnLoadMore" class="btn-more hidden" onclick="loadMore()">Xem thêm sách</button></div>
+  </section>
+</main>
+
+<!-- Trang quản trị -->
+<main id="adminView" class="wrap hidden">
+  <div class="admin-head">
+    <div><span class="pill">Bảng điều khiển quản trị</span><h1>Quản Lý Kho, Đơn Hàng & Nghiệp Vụ</h1></div>
+    <div>
+      <button class="btn-gold" onclick="openBookForm()">+ Thêm Tựa Sách</button>
+      <button class="danger" onclick="resetData()">Khôi Phục Dữ Liệu</button>
+    </div>
+  </div>
+  <div class="kpis">
+    <div class="kpi">Doanh thu<b id="statRevenue">0 đ</b></div>
+    <div class="kpi">Tổng đơn hàng<b id="statOrders">0</b></div>
+    <div class="kpi">Số tựa sách<b id="statBooks">0</b></div>
+    <div class="kpi">Sắp hết hàng (≤3)<b id="statLow" style="color:#dc2626">0</b></div>
+  </div>
+  <div class="panel">
+    <div class="tabs">
+      <button id="tabBtn_inventory" class="on" onclick="switchTab('inventory')">📦 Kho hàng & Nhập sách </button>
+      <button id="tabBtn_orders" onclick="switchTab('orders')">🧾 Hóa đơn bán sách </button>
+      <button id="tabBtn_receipts" onclick="switchTab('receipts')">💵 Phiếu thu tiền </button>
+    </div>
+
+    <!-- TAB 1: KHO HÀNG & LẬP PHIẾU NHẬP (BM1 + QĐ1) -->
+    <div id="tab_inventory" class="scroll">
+      <div class="rule-box">
+        <b>Quy định QĐ1:</b> Số lượng nhập mỗi lần ít nhất là 150. Chỉ nhập các đầu sách có lượng tồn kho ít hơn 30.
+      </div>
+      <div style="margin-bottom: 14px;">
+        <button class="btn-gold" onclick="openImportModal()">+ Lập Phiếu Nhập Sách </button>
+      </div>
+
+      <h3 style="margin: 16px 0 8px 0; font-size: 16px;">Danh Mục Sách Tồn Kho</h3>
+      <table>
+        <thead><tr><th>Mã</th><th>Tên sách</th><th>Tác giả</th><th>Thể loại</th><th>Giá</th><th>KM</th><th>Tồn</th><th>Điều chỉnh kho</th><th>Thao tác</th></tr></thead>
+        <tbody id="inventoryBody"></tbody>
+      </table>
+
+      <h3 style="margin: 24px 0 8px 0; font-size: 16px;">📜 Lịch Sử Phiếu Nhập Sách (Biểu Mẫu BM1)</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Mã Phiếu</th>
+            <th>Ngày Nhập</th>
+            <th>Tên Sách</th>
+            <th>Thể Loại</th>
+            <th>Tác Giả</th>
+            <th>Số Lượng Nhập</th>
+          </tr>
+        </thead>
+        <tbody id="importSlipsBody"></tbody>
+      </table>
+    </div>
+
+    <!-- TAB 2: HÓA ĐƠN BÁN SÁCH (BM2 + QĐ2) -->
+    <div id="tab_orders" class="scroll hidden">
+      <div class="rule-box">
+        <b>Quy định QĐ2:</b> Chỉ bán cho các khách hàng nợ không quá 20.000 đ và đầu sách sau khi bán tồn kho ít nhất là 20.
+      </div>
+      <table>
+        <thead><tr><th>Mã đơn</th><th>Khách hàng</th><th>SĐT</th><th>Tổng tiền</th><th>Ngày đặt</th><th>Trạng thái</th><th>Chi tiết</th></tr></thead>
+        <tbody id="ordersBody"></tbody>
+      </table>
+    </div>
+
+    <!-- TAB 3: PHIẾU THU TIỀN (BM4 + QĐ4) -->
+    <div id="tab_receipts" class="scroll hidden">
+      <div class="rule-box">
+        <b>Quy định QĐ4:</b> Khách mua lần đầu không được nợ. Khách hàng được chiết khấu 30% nếu số tiền hóa đơn từ 200.000 đ trở lên.
+      </div>
+      <div style="margin-bottom: 14px;">
+        <button class="btn-gold" onclick="openReceiptModal()">+ Lập Phiếu Thu Tiền (BM4)</button>
+      </div>
+      <table>
+        <thead><tr><th>Mã Phiếu Thu</th><th>Khách Hàng</th><th>Địa Chỉ</th><th>Điện Thoại</th><th>Số Tiền Thu</th><th>Ngày Thu</th></tr></thead>
+        <tbody id="receiptsBody"></tbody>
+      </table>
+    </div>
+  </div>
+</main>
+
+<!-- Cửa sổ dùng chung -->
+<div id="modal" class="modal" onclick="if(event.target===this)closeModal()"><div id="modalBox" class="box"></div></div>
+<div id="toast" class="toast"></div>
+
+<!-- Footer có đầy đủ các liên kết chính sách -->
+<footer class="footer">
+  <div class="wrap foot-grid">
+    <div><b>The TH BOOKS</b><p>Hệ thống quản lý và kinh doanh nhà sách trực tuyến toàn quốc.</p><p>📘 Facebook · 🎵 TikTok · ▶️ YouTube</p></div>
+    <div>
+      <h4>Chính sách</h4>
+      <p><a href="#" onclick="openPolicyModal('return'); return false;" style="color: inherit; text-decoration: none;">Đổi trả & hoàn tiền</a></p>
+      <p><a href="#" onclick="openPolicyModal('shipping'); return false;" style="color: inherit; text-decoration: none;">Vận chuyển</a></p>
+      <p><a href="#" onclick="openPolicyModal('privacy'); return false;" style="color: inherit; text-decoration: none;">Bảo mật thông tin</a></p>
+    </div>
+    <div><h4>Liên hệ</h4><p>Tân Ninh, Tây Ninh</p><p>Hotline: 1900 1099</p><p>contact@thethbooks.vn</p></div>
+    <div><h4>Thanh toán</h4><p>💵 COD · 💳 Thẻ · 🏦 Chuyển khoản</p><p>© 2026 The TH BOOKS</p></div>
+  </div>
+</footer>
+
+<!-- Modal hiển thị chính sách động -->
+<div id="policyModal" class="modal" onclick="if(event.target===this)closePolicyModal()">
+  <div class="box wide">
+    <button class="x" onclick="closePolicyModal()">✕</button>
+    <div id="policyContent"></div>
+    <div style="margin-top: 20px; text-align: right;">
+      <button onclick="closePolicyModal()">Đã hiểu</button>
+    </div>
+  </div>
+</div>
+
+<script>
+function openPolicyModal(type) {
+    var modal = document.getElementById('policyModal');
+    var content = document.getElementById('policyContent');
+    if (!modal || !content) return;
+
+    if (type === 'return') {
+        content.innerHTML = `
+            <h3 style="color: var(--g); margin-bottom: 12px;">Chính Sách Đổi Trả & Hoàn Tiền</h3>
+            <div style="font-size: 14px; line-height: 1.6; color: var(--tx);">
+              <h4 style="margin-top: 10px; color: var(--g);">1. Điều kiện đổi trả</h4>
+              <p>Sách mua tại <strong>The TH BOOKS</strong> được đổi trả trong vòng <strong>7 ngày</strong> kể từ ngày nhận hàng nếu sách lỗi in ấn, hư hỏng do vận chuyển hoặc giao nhầm.</p>
+              <h4 style="margin-top: 10px; color: var(--g);">2. Quy định hoàn tiền</h4>
+              <p>Hoàn tiền 100% qua tài khoản trong vòng <strong>3 - 5 ngày làm việc</strong> nếu không còn sách đổi mới.</p>
+            </div>`;
+    } else if (type === 'shipping') {
+        content.innerHTML = `
+            <h3 style="color: var(--g); margin-bottom: 12px;">Chính Sách Vận Chuyển</h3>
+            <div style="font-size: 14px; line-height: 1.6; color: var(--tx);">
+              <h4 style="margin-top: 10px; color: var(--g);">1. Phạm vi giao hàng</h4>
+              <p>Giao hàng toàn quốc thông qua các đơn vị vận chuyển uy tín.</p>
+              <h4 style="margin-top: 10px; color: var(--g);">2. Phí vận chuyển & Thời gian</h4>
+              <p>- Miễn phí vận chuyển toàn quốc cho đơn hàng từ <strong>250.000 đ</strong> trở lên.</p>
+              <p>- Thời gian giao hàng từ 2 - 4 ngày tùy khu vực tỉnh thành.</p>
+            </div>`;
+    } else if (type === 'privacy') {
+        content.innerHTML = `
+            <h3 style="color: var(--g); margin-bottom: 12px;">Bảo Mật Thông Tin</h3>
+            <div style="font-size: 14px; line-height: 1.6; color: var(--tx);">
+              <h4 style="margin-top: 10px; color: var(--g);">1. Mục đích thu thập</h4>
+              <p>Thông tin cá nhân thu thập (họ tên, SĐT, địa chỉ) chỉ dùng để xác nhận đơn hàng và chăm sóc khách hàng.</p>
+              <h4 style="margin-top: 10px; color: var(--g);">2. Cam kết bảo mật</h4>
+              <p>Tuyệt đối không chia sẻ, bán hoặc trao đổi thông tin khách hàng cho bên thứ ba dưới mọi hình thức.</p>
+            </div>`;
+    }
+    modal.classList.add('open');
+}
+
+function closePolicyModal() {
+    var modal = document.getElementById('policyModal');
+    if (modal) {
+        modal.classList.remove('open');
+    }
+}
+</script>
+
+</body>
+</html>
