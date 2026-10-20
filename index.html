@@ -192,15 +192,43 @@ body.dark .rule-box { background: #3b2d12; color: #fde047; }
 <!-- Footer có đầy đủ các liên kết chính sách -->
 <footer class="footer">
   <div class="wrap foot-grid">
-    <div><b>The TH BOOKS</b><p>Hệ thống quản lý và kinh doanh nhà sách trực tuyến toàn quốc.</p><p>📘 Facebook · 🎵 TikTok · ▶️ YouTube</p></div>
+    <!-- Cột 1: Thông tin chung & Mạng xã hội -->
+    <div>
+      <b>The TH BOOKS</b>
+      <p>Hệ thống quản lý và kinh doanh nhà sách trực tuyến toàn quốc.</p>
+      <p class="social-links">
+        <a href="https://facebook.com" target="_blank" rel="noopener">📘 Facebook</a> · 
+        <a href="https://tiktok.com" target="_blank" rel="noopener">🎵 TikTok</a> · 
+        <a href="https://youtube.com" target="_blank" rel="noopener">▶️ YouTube</a>
+      </p>
+    </div>
+
+    <!-- Cột 2: Chính sách -->
     <div>
       <h4>Chính sách</h4>
       <p><a href="#" onclick="openPolicyModal('return'); return false;" style="color: inherit; text-decoration: none;">Đổi trả & hoàn tiền</a></p>
       <p><a href="#" onclick="openPolicyModal('shipping'); return false;" style="color: inherit; text-decoration: none;">Vận chuyển</a></p>
-      <p><a href="#" onclick="openPolicyModal('privacy'); return false;" style="color: inherit; text-decoration: none;">Bảo mật thông tin</a></p>
+      <p><a href="#" onclick="openPolicyModal('privacy'); return false;" style="color: inherit; text-decoderation: none;">Bảo mật thông tin</a></p>
     </div>
-    <div><h4>Liên hệ</h4><p>Tân Ninh, Tây Ninh</p><p>Hotline: 1900 1099</p><p>contact@thethbooks.vn</p></div>
-    <div><h4>Thanh toán</h4><p>💵 COD · 💳 Thẻ · 🏦 Chuyển khoản</p><p>© 2026 The TH BOOKS</p></div>
+
+    <!-- Cột 3: Liên hệ -->
+    <div>
+      <h4>Liên hệ</h4>
+      <p>Tân Ninh, Tây Ninh</p>
+      <p>Hotline: <a href="tel:19001099" style="color:inherit; text-decoration:none;">1900 1099</a></p>
+      <p><a href="mailto:contact@thethbooks.vn" style="color:inherit; text-decoration:none;">contact@thethbooks.vn</a></p>
+    </div>
+
+    <!-- Cột 4: Thanh toán -->
+    <div>
+      <h4>Thanh toán</h4>
+      <p>💵 COD · 💳 Thẻ · 🏦 Chuyển khoản</p>
+    </div>
+  </div>
+
+  <!-- Dòng Bản quyền tách riêng biệt full-width -->
+  <div class="foot-bottom" style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 20px; padding-top: 15px; text-align: center; font-size: 13px; opacity: 0.8;">
+    <p>© 2026 The TH BOOKS. All rights reserved. | Thiết kế & Phát triển cho đồ án Nhà Sách Trực Tuyến</p>
   </div>
 </footer>
 

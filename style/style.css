@@ -879,3 +879,8 @@ td select {
   #modalBox { position: absolute; left: 0; top: 0; }
   .x, .noprint { display: none !important; }
 }
+.social-links a {
+  color:orange;
+  text-decoration: none; 
+  transition: color 0.2s ease;
+}
