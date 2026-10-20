@@ -573,9 +573,9 @@ function openAuth(tab) {
     openModal('<div style="display:flex;gap:8px;margin:16px 0 4px"><button class="' + (isLogin ? '' : 'sec') + '" style="flex:1" onclick="openAuth(\'login\')">ĐĂNG NHẬP</button>' +
         '<button class="' + (isLogin ? 'sec' : '') + '" style="flex:1" onclick="openAuth(\'register\')">ĐĂNG KÝ</button></div>' +
         '<form onsubmit="event.preventDefault();' + (isLogin ? 'handleLogin()' : 'handleRegister()') + '">' +
-        (isLogin ? '' : '<label>Họ và tên *<input id="regName" required></label><label>Số điện thoại *<input id="regPhone" required></label>') +
-        '<label>Email *<input id="authEmail" type="email" required></label>' +
-        '<label>Mật khẩu *<input id="authPass" type="password" required minlength="6"></label>' +
+        (isLogin ? '' : '<label>Họ và tên *<input id="regName" required placeholder="Nhập họ và tên"></label><label>Số điện thoại *<input id="regPhone" required placeholder="Nhập số điện thoại"></label>') +
+        '<label>Email *<input id="authEmail" type="email" required placeholder="example@gmail.com"></label>' +
+        '<label>Mật khẩu *<input id="authPass" type="password" required minlength="6" placeholder="Nhập mật khẩu(Tối thiểu 8 ký tự, bao gồm chữ & số)"></label>' +
         '<button style="width:100%;margin-top:14px">' + (isLogin ? 'Đăng nhập' : 'Đăng ký') + '</button></form>');
 }
 
